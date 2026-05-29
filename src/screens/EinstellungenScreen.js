@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, Switch, ScrollView, StatusBar } from 'react-native';
 import DatenschutzScreen from './DatenschutzScreen';
+import ImpressumScreen from './ImpressumScreen';
 import { Ionicons } from '@expo/vector-icons';
 import { getBenachrichtigungszeit, setBenachrichtigungszeit, getZufallsprinzip, setZufallsprinzip, getErledigteStatistik } from '../services/storage';
 import { planeTaglicheBenachrichtigung } from '../services/notifications';
@@ -14,6 +15,7 @@ export default function EinstellungenScreen() {
   const [gespeichert, setGespeichert] = useState(false);
   const [statistik, setStatistik]     = useState({ heute: 0, woche: 0, monat: 0, gesamt: 0 });
   const [datenschutzOffen, setDatenschutzOffen] = useState(false);
+  const [impressumOffen,   setImpressumOffen]   = useState(false);
 
   useEffect(() => {
     getBenachrichtigungszeit().then(z => {
@@ -157,16 +159,25 @@ export default function EinstellungenScreen() {
           </Text>
         </View>
 
-        {/* Datenschutz-Link */}
-        <TouchableOpacity style={styles.datenschutzBtn} onPress={() => setDatenschutzOffen(true)} activeOpacity={0.7}>
-          <Ionicons name="shield-checkmark-outline" size={16} color={COLORS.textMuted} />
-          <Text style={styles.datenschutzText}>Datenschutzerklärung</Text>
-          <Ionicons name="chevron-forward" size={14} color={COLORS.textMuted} style={{ marginLeft: 'auto' }} />
-        </TouchableOpacity>
+        {/* Rechtliches */}
+        <View style={styles.rechtlichesGruppe}>
+          <TouchableOpacity style={styles.rechtlichesBtn} onPress={() => setDatenschutzOffen(true)} activeOpacity={0.7}>
+            <Ionicons name="shield-checkmark-outline" size={16} color={COLORS.textMuted} />
+            <Text style={styles.rechtlichesText}>Datenschutzerklärung</Text>
+            <Ionicons name="chevron-forward" size={14} color={COLORS.textMuted} style={{ marginLeft: 'auto' }} />
+          </TouchableOpacity>
+          <View style={styles.trennlinie} />
+          <TouchableOpacity style={styles.rechtlichesBtn} onPress={() => setImpressumOffen(true)} activeOpacity={0.7}>
+            <Ionicons name="document-text-outline" size={16} color={COLORS.textMuted} />
+            <Text style={styles.rechtlichesText}>Impressum</Text>
+            <Ionicons name="chevron-forward" size={14} color={COLORS.textMuted} style={{ marginLeft: 'auto' }} />
+          </TouchableOpacity>
+        </View>
 
       </ScrollView>
 
       <DatenschutzScreen visible={datenschutzOffen} onClose={() => setDatenschutzOffen(false)} />
+      <ImpressumScreen   visible={impressumOffen}   onClose={() => setImpressumOffen(false)} />
     </View>
   );
 }
@@ -200,8 +211,10 @@ const styles = StyleSheet.create({
   infoBox:         { flexDirection: 'row', alignItems: 'flex-start', gap: 10, padding: 16, backgroundColor: COLORS.bgElement, borderRadius: RADIUS.md, marginBottom: 12 },
   infoText:        { fontFamily: FONTS.sans, fontSize: 12, color: COLORS.textMuted, flex: 1, lineHeight: 18 },
 
-  datenschutzBtn:  { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 16, backgroundColor: COLORS.bgElement, borderRadius: RADIUS.md },
-  datenschutzText: { fontFamily: FONTS.sans, fontSize: 13, color: COLORS.textMuted },
+  rechtlichesGruppe: { backgroundColor: COLORS.bgElement, borderRadius: RADIUS.md, overflow: 'hidden' },
+  rechtlichesBtn:    { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 16 },
+  rechtlichesText:   { fontFamily: FONTS.sans, fontSize: 13, color: COLORS.textMuted },
+  trennlinie:        { height: 1, backgroundColor: COLORS.border, marginLeft: 42 },
 
   statsGrid:       { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   statKarte:       { flex: 1, minWidth: '45%', backgroundColor: COLORS.bgElement, borderRadius: RADIUS.md, padding: 16, alignItems: 'center' },

@@ -24,7 +24,7 @@ export const DATENSCHUTZ_ABSCHNITTE = [
       'Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) für die App ' +
       '„Guten Morgen Impuls" ist:\n\n' +
       'Paul Ellinger\n' +
-      'E-Mail: paul.elli@tuta.com\n\n' +
+      'E-Mail: paul.djazzy@tuta.com\n\n' +
       'Ein gesetzlich vorgeschriebener Datenschutzbeauftragter ist nicht bestellt, da die ' +
       'Voraussetzungen des Art. 37 DSGVO nicht erfüllt sind (keine umfangreiche ' +
       'Verarbeitung sensibler Daten, kein öffentlicher Träger).\n\n' +
@@ -180,7 +180,7 @@ export const DATENSCHUTZ_ABSCHNITTE = [
       'deiner personenbezogenen Daten einzulegen, die auf Grundlage von Art. 6 Abs. 1 lit. f ' +
       'DSGVO (berechtigtes Interesse) erfolgt. Wir verarbeiten die Daten dann nicht mehr, ' +
       'es sei denn, wir können zwingende schutzwürdige Gründe nachweisen.\n\n' +
-      'Zur Ausübung deiner Rechte: paul.elli@tuta.com',
+      'Zur Ausübung deiner Rechte: paul.djazzy@tuta.com',
   },
 
   {
@@ -215,7 +215,7 @@ export const DATENSCHUTZ_ABSCHNITTE = [
       'Diese App richtet sich nicht an Kinder unter 16 Jahren. Wir erheben wissentlich ' +
       'keine personenbezogenen Daten von Kindern unter 16 Jahren. Solltest du Kenntnis ' +
       'davon erlangen, dass ein Kind unter 16 Jahren die App nutzt und dabei Daten ' +
-      'verarbeitet werden, bitte informiere uns unter paul.elli@tuta.com, damit wir die ' +
+      'verarbeitet werden, bitte informiere uns unter paul.djazzy@tuta.com, damit wir die ' +
       'notwendigen Maßnahmen ergreifen können.',
   },
 
