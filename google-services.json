@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "328220334423",
+    "project_id": "guten-morgen-impulse",
+    "storage_bucket": "guten-morgen-impulse.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328220334423:android:1fbd0da3e44fbec7020612",
+        "android_client_info": {
+          "package_name": "com.pauleschreiber.gutenmorgenimpuls"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa8Hbmwouq7HvFG5OR0UlN9Wx2VuQ6J48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -40,8 +40,8 @@ yarn-error.*
 /ios
 /android
 
-# Firebase (sensible Daten, nicht ins Repo)
-google-services.json
+# Firebase
+# google-services.json wird benoetigt fuer EAS Build → nicht ignorieren
 GoogleService-Info.plist
 
 # Build-Artefakte
