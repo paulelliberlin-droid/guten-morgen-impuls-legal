@@ -41,6 +41,7 @@ export default function HomeScreen() {
   }
 
   const ladeTagesImpuls = useCallback(async (erstAufruf = false) => {
+    // "Nächster Impuls"-Button: Rate-Limit prüfen BEVOR geladen wird
     if (!erstAufruf) {
       const darf = await darfNeuenImpulsLaden();
       if (!darf) {
@@ -53,10 +54,10 @@ export default function HomeScreen() {
     try {
       setLoading(true);
       setGesperrt(false);
-      const zufall     = await getZufallsprinzip();
-      const kategorien = zufall ? [] : await getBevorzugteKategorien();
+      const zufall       = await getZufallsprinzip();
+      const kategorien   = zufall ? [] : await getBevorzugteKategorien();
       const erledigteIds = await getErledigteImpulse();
-      const alle       = await loadImpulse(kategorien);
+      const alle         = await loadImpulse(kategorien);
       if (!alle.length) { setImpuls(null); return; }
       const ausgewaehlter = getZufallsImpuls(alle, erledigteIds);
       setImpuls(ausgewaehlter);
@@ -67,6 +68,16 @@ export default function HomeScreen() {
     } finally {
       setLoading(false);
       animateIn();
+    }
+    // App-Öffnung: NACH dem Laden prüfen ob Sperre aus vorheriger Session noch gilt.
+    // Impuls wird gezeigt, aber "Nächster"-Button bleibt gesperrt + Countdown läuft.
+    if (erstAufruf) {
+      const darf = await darfNeuenImpulsLaden();
+      if (!darf) {
+        const ms = await getVerbleibendeWartezeit();
+        setWarteSeconds(Math.ceil(ms / 1000));
+        setGesperrt(true);
+      }
     }
   }, []);
 
