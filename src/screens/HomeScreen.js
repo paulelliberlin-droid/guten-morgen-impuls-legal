@@ -9,7 +9,7 @@ import {
   getBevorzugteKategorien, getErledigteImpulse,
   addErledigterImpuls, darfNeuenImpulsLaden,
   setLetztenImpulsZeit, getVerbleibendeWartezeit,
-  getZufallsprinzip,
+  getZufallsprinzip, getLetzterImpuls, setLetzterImpuls,
 } from '../services/storage';
 import { COLORS, FONTS, RADIUS, KATEGORIE_CONFIG } from '../theme';
 
@@ -41,16 +41,54 @@ export default function HomeScreen() {
   }
 
   const ladeTagesImpuls = useCallback(async (erstAufruf = false) => {
-    // "Nächster Impuls"-Button: Rate-Limit prüfen BEVOR geladen wird
-    if (!erstAufruf) {
-      const darf = await darfNeuenImpulsLaden();
-      if (!darf) {
-        const ms = await getVerbleibendeWartezeit();
-        setWarteSeconds(Math.ceil(ms / 1000));
-        setGesperrt(true);
-        return;
+    // ── App wird geöffnet: gespeicherten Impuls anzeigen ──────────────────────
+    if (erstAufruf) {
+      try {
+        setLoading(true);
+        const gespeicherter = await getLetzterImpuls();
+        const erledigteIds  = await getErledigteImpulse();
+
+        if (gespeicherter) {
+          // Letzten Impuls wieder anzeigen — kein neuer wird automatisch geladen
+          setImpuls(gespeicherter);
+          setErledigt(erledigteIds.includes(gespeicherter.id));
+        } else {
+          // Erster Start: noch kein Impuls gespeichert → einen laden
+          const zufall     = await getZufallsprinzip();
+          const kategorien = zufall ? [] : await getBevorzugteKategorien();
+          const alle       = await loadImpulse(kategorien);
+          if (!alle.length) { setImpuls(null); return; }
+          const ausgewaehlter = getZufallsImpuls(alle, erledigteIds);
+          setImpuls(ausgewaehlter);
+          setErledigt(erledigteIds.includes(ausgewaehlter?.id));
+          await setLetzterImpuls(ausgewaehlter);
+        }
+
+        // Prüfen ob Sperre aus vorheriger Session noch aktiv ist
+        const darf = await darfNeuenImpulsLaden();
+        if (!darf) {
+          const ms = await getVerbleibendeWartezeit();
+          setWarteSeconds(Math.ceil(ms / 1000));
+          setGesperrt(true);
+        }
+      } catch {
+        setImpuls(null);
+      } finally {
+        setLoading(false);
+        animateIn();
       }
+      return;
     }
+
+    // ── "Nächster Impuls"-Button: Rate-Limit prüfen ───────────────────────────
+    const darf = await darfNeuenImpulsLaden();
+    if (!darf) {
+      const ms = await getVerbleibendeWartezeit();
+      setWarteSeconds(Math.ceil(ms / 1000));
+      setGesperrt(true);
+      return;
+    }
+
     try {
       setLoading(true);
       setGesperrt(false);
@@ -62,22 +100,13 @@ export default function HomeScreen() {
       const ausgewaehlter = getZufallsImpuls(alle, erledigteIds);
       setImpuls(ausgewaehlter);
       setErledigt(erledigteIds.includes(ausgewaehlter?.id));
-      if (!erstAufruf) await setLetztenImpulsZeit();
+      await setLetzterImpuls(ausgewaehlter);   // neuen Impuls speichern
+      await setLetztenImpulsZeit();             // Timestamp für Rate-Limit setzen
     } catch {
       setImpuls(null);
     } finally {
       setLoading(false);
       animateIn();
-    }
-    // App-Öffnung: NACH dem Laden prüfen ob Sperre aus vorheriger Session noch gilt.
-    // Impuls wird gezeigt, aber "Nächster"-Button bleibt gesperrt + Countdown läuft.
-    if (erstAufruf) {
-      const darf = await darfNeuenImpulsLaden();
-      if (!darf) {
-        const ms = await getVerbleibendeWartezeit();
-        setWarteSeconds(Math.ceil(ms / 1000));
-        setGesperrt(true);
-      }
     }
   }, []);
 

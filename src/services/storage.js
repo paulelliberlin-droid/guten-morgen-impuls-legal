@@ -6,6 +6,7 @@ const KEYS = {
   ERLEDIGTE_IMPULSE: 'erledigte_impulse',
   ERLEDIGTE_HISTORY: 'erledigte_history',   // [{id, ts}]
   LETZTER_IMPULS_ZEIT: 'letzter_impuls_zeit',
+  LETZTER_IMPULS: 'letzter_impuls',         // {id, text, kategorie, ...}
   ZUFALLSPRINZIP: 'zufallsprinzip',
 };
 
@@ -69,6 +70,17 @@ export async function getErledigteStatistik() {
 
 export async function resetErledigteImpulse() {
   await AsyncStorage.removeItem(KEYS.ERLEDIGTE_IMPULSE);
+}
+
+// --- Letzter angezeigter Impuls ---
+
+export async function getLetzterImpuls() {
+  const value = await AsyncStorage.getItem(KEYS.LETZTER_IMPULS);
+  return value ? JSON.parse(value) : null;
+}
+
+export async function setLetzterImpuls(impuls) {
+  await AsyncStorage.setItem(KEYS.LETZTER_IMPULS, JSON.stringify(impuls));
 }
 
 // --- Rate-Limiting: letzter Impuls-Abruf ---
