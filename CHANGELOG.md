@@ -1,5 +1,10 @@
 # Changelog — Guten Morgen Impuls
 
+## [1.1.2] — 2026-05-29
+### Bugfix
+- Rate-Limit überlebt jetzt App-Neustart: Impuls wird angezeigt, aber
+  Countdown läuft weiter und "Nächster Impuls" bleibt gesperrt
+
 ## [1.1.0] — 2026-05-29
 ### Verbesserungen
 - Countdown läuft jetzt rückwärts in Echtzeit (MM:SS)
