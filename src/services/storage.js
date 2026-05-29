@@ -4,6 +4,7 @@ const KEYS = {
   BENACHRICHTIGUNGSZEIT: 'benachrichtigungszeit',
   BEVORZUGTE_KATEGORIEN: 'bevorzugte_kategorien',
   ERLEDIGTE_IMPULSE: 'erledigte_impulse',
+  ERLEDIGTE_HISTORY: 'erledigte_history',   // [{id, ts}]
   LETZTER_IMPULS_ZEIT: 'letzter_impuls_zeit',
   ZUFALLSPRINZIP: 'zufallsprinzip',
 };
@@ -38,11 +39,32 @@ export async function getErledigteImpulse() {
 }
 
 export async function addErledigterImpuls(impulsId) {
+  // IDs-Liste (fuer Rate-Limit / Duplikat-Check)
   const current = await getErledigteImpulse();
   if (!current.includes(impulsId)) {
     const updated = [...current, impulsId];
     await AsyncStorage.setItem(KEYS.ERLEDIGTE_IMPULSE, JSON.stringify(updated));
   }
+  // History mit Timestamp (fuer Statistik)
+  const histRaw  = await AsyncStorage.getItem(KEYS.ERLEDIGTE_HISTORY);
+  const history  = histRaw ? JSON.parse(histRaw) : [];
+  history.push({ id: impulsId, ts: Date.now() });
+  await AsyncStorage.setItem(KEYS.ERLEDIGTE_HISTORY, JSON.stringify(history));
+}
+
+export async function getErledigteStatistik() {
+  const histRaw = await AsyncStorage.getItem(KEYS.ERLEDIGTE_HISTORY);
+  const history = histRaw ? JSON.parse(histRaw) : [];
+  const now = Date.now();
+  const startOfDay   = new Date(); startOfDay.setHours(0, 0, 0, 0);
+  const startOfWeek  = new Date(); startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); startOfWeek.setHours(0, 0, 0, 0);
+  const startOfMonth = new Date(); startOfMonth.setDate(1); startOfMonth.setHours(0, 0, 0, 0);
+  return {
+    heute:  history.filter(e => e.ts >= startOfDay.getTime()).length,
+    woche:  history.filter(e => e.ts >= startOfWeek.getTime()).length,
+    monat:  history.filter(e => e.ts >= startOfMonth.getTime()).length,
+    gesamt: history.length,
+  };
 }
 
 export async function resetErledigteImpulse() {

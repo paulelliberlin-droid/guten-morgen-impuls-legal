@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, Switch, ScrollView, StatusBar } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { getBenachrichtigungszeit, setBenachrichtigungszeit, getZufallsprinzip, setZufallsprinzip } from '../services/storage';
+import { getBenachrichtigungszeit, setBenachrichtigungszeit, getZufallsprinzip, setZufallsprinzip, getErledigteStatistik } from '../services/storage';
 import { planeTaglicheBenachrichtigung } from '../services/notifications';
 import { COLORS, FONTS, RADIUS } from '../theme';
 
@@ -11,6 +11,7 @@ export default function EinstellungenScreen() {
   const [gespeichertZeit, setGespeichertZeit] = useState('');
   const [zufall, setZufall]           = useState(true);
   const [gespeichert, setGespeichert] = useState(false);
+  const [statistik, setStatistik]     = useState({ heute: 0, woche: 0, monat: 0, gesamt: 0 });
 
   useEffect(() => {
     getBenachrichtigungszeit().then(z => {
@@ -18,6 +19,7 @@ export default function EinstellungenScreen() {
       setStunden(h); setMinuten(m); setGespeichertZeit(z);
     });
     getZufallsprinzip().then(setZufall);
+    getErledigteStatistik().then(setStatistik);
   }, []);
 
   async function speichern() {
@@ -100,6 +102,34 @@ export default function EinstellungenScreen() {
           </View>
         </View>
 
+        {/* Statistik-Sektion */}
+        <View style={styles.sektion}>
+          <View style={styles.sektionHeader}>
+            <Ionicons name="bar-chart-outline" size={16} color={COLORS.gold} />
+            <Text style={styles.sektionLabel}>DEINE FORTSCHRITTE</Text>
+          </View>
+          <Text style={styles.sektionHint}>Wie viele Impulse du umgesetzt hast:</Text>
+
+          <View style={styles.statsGrid}>
+            <View style={styles.statKarte}>
+              <Text style={styles.statZahl}>{statistik.heute}</Text>
+              <Text style={styles.statLabel}>Heute</Text>
+            </View>
+            <View style={styles.statKarte}>
+              <Text style={styles.statZahl}>{statistik.woche}</Text>
+              <Text style={styles.statLabel}>Diese Woche</Text>
+            </View>
+            <View style={styles.statKarte}>
+              <Text style={styles.statZahl}>{statistik.monat}</Text>
+              <Text style={styles.statLabel}>Diesen Monat</Text>
+            </View>
+            <View style={[styles.statKarte, styles.statKarteGold]}>
+              <Text style={[styles.statZahl, { color: COLORS.gold }]}>{statistik.gesamt}</Text>
+              <Text style={styles.statLabel}>Insgesamt</Text>
+            </View>
+          </View>
+        </View>
+
         {/* Speichern-Button */}
         <TouchableOpacity
           style={[styles.btnSpeichern, gespeichert && styles.btnGespeichert]}
@@ -158,4 +188,10 @@ const styles = StyleSheet.create({
 
   infoBox:         { flexDirection: 'row', alignItems: 'flex-start', gap: 10, padding: 16, backgroundColor: COLORS.bgElement, borderRadius: RADIUS.md },
   infoText:        { fontFamily: FONTS.sans, fontSize: 12, color: COLORS.textMuted, flex: 1, lineHeight: 18 },
+
+  statsGrid:       { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+  statKarte:       { flex: 1, minWidth: '45%', backgroundColor: COLORS.bgElement, borderRadius: RADIUS.md, padding: 16, alignItems: 'center' },
+  statKarteGold:   { borderWidth: 1, borderColor: COLORS.goldDim },
+  statZahl:        { fontFamily: FONTS.serifBold, fontSize: 36, color: COLORS.textPrimary, lineHeight: 42 },
+  statLabel:       { fontFamily: FONTS.sans, fontSize: 12, color: COLORS.textSecondary, marginTop: 4, textAlign: 'center' },
 });

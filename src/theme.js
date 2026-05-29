@@ -52,6 +52,8 @@ export const KATEGORIE_CONFIG = {
     deep: '#2E1F14',
     accent: '#8B5E3C',
     gradient: ['#2E1F14', '#1A1A2E'],
+    beschreibung:
+      'Die Huna-Philosophie stammt aus Hawaii und beruht auf 7 Prinzipien für ein bewusstes Leben — von "Ike" (Die Welt ist, was du denkst) bis "Pono" (Wirksamkeit ist Wahrheit). Sie lehrt, wie du deine innere Kraft entfaltest, Grenzen überwindest und in Harmonie mit dir und der Welt lebst.',
   },
   charisma: {
     label: 'Charisma',
@@ -59,6 +61,8 @@ export const KATEGORIE_CONFIG = {
     deep: '#141428',
     accent: '#4A6FA5',
     gradient: ['#141428', '#1A1A2E'],
+    beschreibung:
+      'Charisma ist die Fähigkeit, andere Menschen durch deine Präsenz zu inspirieren und anzuziehen. Diese Impulse stärken deine Ausstrahlung, dein Selbstbewusstsein und deine Wirkung in Gesprächen — damit du authentisch überzeugst, ohne dich zu verstellen.',
   },
   achtsamkeit: {
     label: 'Achtsamkeit',
@@ -66,5 +70,7 @@ export const KATEGORIE_CONFIG = {
     deep: '#0F2A1E',
     accent: '#3A8A5F',
     gradient: ['#0F2A1E', '#1A1A2E'],
+    beschreibung:
+      'Achtsamkeit bedeutet, vollständig im gegenwärtigen Moment zu sein — ohne Urteil, ohne Ablenkung. Diese Impulse helfen dir, innere Ruhe zu finden, Stress bewusst loszulassen und deinen Alltag mit mehr Tiefe und Dankbarkeit zu erleben.',
   },
 };

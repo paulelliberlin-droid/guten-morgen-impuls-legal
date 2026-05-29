@@ -1,5 +1,12 @@
 # Changelog — Guten Morgen Impuls
 
+## [1.1.0] — 2026-05-29
+### Verbesserungen
+- Countdown läuft jetzt rückwärts in Echtzeit (MM:SS)
+- Textfeld (Impuls-Karte) hat helleren, sichtbaren Hintergrund
+- Einstellungen: neue Statistik-Übersicht (Heute / Woche / Monat / Gesamt)
+- Kategorien: Info-Button mit Erklärung zu jeder Kategorie (Modal)
+
 ## [1.0.0] — 2026-05-29
 ### Erstveröffentlichung
 - 62 Impulse in Firebase (Huna, Charisma, Achtsamkeit)

@@ -18,8 +18,20 @@ export default function HomeScreen() {
   const [loading, setLoading]       = useState(true);
   const [erledigt, setErledigt]     = useState(false);
   const [gesperrt, setGesperrt]     = useState(false);
-  const [warteMinuten, setWarteMinuten] = useState(0);
+  const [warteSeconds, setWarteSeconds] = useState(0);
   const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  // Countdown-Ticker: läuft jede Sekunde wenn gesperrt
+  useEffect(() => {
+    if (!gesperrt || warteSeconds <= 0) return;
+    const timer = setTimeout(() => {
+      setWarteSeconds(s => {
+        if (s <= 1) { setGesperrt(false); return 0; }
+        return s - 1;
+      });
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [gesperrt, warteSeconds]);
 
   useEffect(() => { ladeTagesImpuls(true); }, []);
 
@@ -33,7 +45,7 @@ export default function HomeScreen() {
       const darf = await darfNeuenImpulsLaden();
       if (!darf) {
         const ms = await getVerbleibendeWartezeit();
-        setWarteMinuten(Math.ceil(ms / 60000));
+        setWarteSeconds(Math.ceil(ms / 1000));
         setGesperrt(true);
         return;
       }
@@ -62,6 +74,12 @@ export default function HomeScreen() {
     if (!impuls) return;
     await addErledigterImpuls(impuls.id);
     setErledigt(true);
+  }
+
+  function formatWartezeit(sek) {
+    const m = Math.floor(sek / 60);
+    const s = sek % 60;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   }
 
   const kat = impuls ? (KATEGORIE_CONFIG[impuls.kategorie] || KATEGORIE_CONFIG.achtsamkeit) : null;
@@ -145,7 +163,7 @@ export default function HomeScreen() {
 
           {gesperrt ? (
             <View style={styles.gesperrtBox}>
-              <Text style={styles.gesperrtText}>⏱  Naechster Impuls in {warteMinuten} Min</Text>
+              <Text style={styles.gesperrtText}>⏱  Nächster Impuls in {formatWartezeit(warteSeconds)}</Text>
             </View>
           ) : (
             <TouchableOpacity style={styles.btnWeiter} onPress={() => ladeTagesImpuls(false)} activeOpacity={0.6}>
@@ -174,7 +192,7 @@ const styles = StyleSheet.create({
   bildPlaceholder:{ height: 180, borderRadius: RADIUS.lg, justifyContent: 'center', alignItems: 'center' },
   placeholderEmoji:{ fontSize: 64 },
 
-  textCard:       { marginBottom: 32 },
+  textCard:       { marginBottom: 32, backgroundColor: '#1E1C30', borderRadius: RADIUS.lg, paddingHorizontal: 24, paddingTop: 8, paddingBottom: 20, borderWidth: 1, borderColor: 'rgba(200,169,110,0.15)' },
   anführung:      { fontFamily: FONTS.serifBold, fontSize: 72, color: COLORS.gold, opacity: 0.3, lineHeight: 60, marginBottom: -8 },
   anführungEnd:   { textAlign: 'right', marginTop: -24, marginBottom: 0 },
   impulsText:     { fontFamily: FONTS.serifItalic, fontSize: 22, lineHeight: 36, color: COLORS.textPrimary, textAlign: 'center', paddingHorizontal: 8 },

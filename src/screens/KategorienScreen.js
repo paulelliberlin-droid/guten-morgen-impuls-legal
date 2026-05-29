@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, StatusBar, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, StatusBar, ScrollView, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { getBevorzugteKategorien, setBevorzugteKategorien } from '../services/storage';
@@ -13,6 +13,7 @@ const KATEGORIEN = [
 
 export default function KategorienScreen() {
   const [ausgewaehlt, setAusgewaehlt] = useState([]);
+  const [infoModal, setInfoModal]     = useState(null); // null | KATEGORIE_CONFIG-Objekt
 
   useEffect(() => {
     getBevorzugteKategorien().then(setAusgewaehlt);
@@ -69,6 +70,15 @@ export default function KategorienScreen() {
                     </View>
                   </View>
 
+                  {/* Info-Button */}
+                  <TouchableOpacity
+                    style={styles.infoBtn}
+                    onPress={e => { e.stopPropagation(); setInfoModal(kat); }}
+                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  >
+                    <Ionicons name="information-circle-outline" size={22} color={COLORS.textMuted} />
+                  </TouchableOpacity>
+
                   {aktiv && (
                     <View style={[styles.checkCircle, { backgroundColor: kat.accent }]}>
                       <Ionicons name="checkmark" size={14} color={COLORS.bg} />
@@ -91,6 +101,33 @@ export default function KategorienScreen() {
           <Text style={styles.btnSpeichernText}>Auswahl speichern</Text>
         </TouchableOpacity>
       </ScrollView>
+
+      {/* Info-Modal */}
+      <Modal
+        visible={!!infoModal}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setInfoModal(null)}
+      >
+        <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setInfoModal(null)}>
+          <TouchableOpacity style={styles.modalKarte} activeOpacity={1}>
+            {infoModal && (
+              <>
+                <View style={styles.modalHeader}>
+                  <Text style={styles.modalEmoji}>{infoModal.emoji}</Text>
+                  <Text style={[styles.modalTitel, { color: infoModal.accent }]}>{infoModal.label}</Text>
+                  <TouchableOpacity onPress={() => setInfoModal(null)}>
+                    <Ionicons name="close" size={22} color={COLORS.textMuted} />
+                  </TouchableOpacity>
+                </View>
+                <View style={[styles.modalTrenner, { backgroundColor: infoModal.accent + '44' }]} />
+                <Text style={styles.modalText}>{infoModal.beschreibung}</Text>
+              </>
+            )}
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
+
     </View>
   );
 }
@@ -116,4 +153,14 @@ const styles = StyleSheet.create({
 
   btnSpeichern:   { backgroundColor: COLORS.gold, paddingVertical: 16, borderRadius: RADIUS.md, alignItems: 'center' },
   btnSpeichernText:{ fontFamily: FONTS.sansBold, fontSize: 15, color: COLORS.bg },
+
+  infoBtn:        { paddingHorizontal: 14, paddingVertical: 8 },
+
+  modalOverlay:   { flex: 1, backgroundColor: 'rgba(0,0,0,0.7)', justifyContent: 'center', alignItems: 'center', padding: 28 },
+  modalKarte:     { backgroundColor: '#1A1A2E', borderRadius: RADIUS.lg, padding: 24, width: '100%', borderWidth: 1, borderColor: COLORS.border },
+  modalHeader:    { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 14 },
+  modalEmoji:     { fontSize: 28 },
+  modalTitel:     { fontFamily: FONTS.serifBold, fontSize: 22, flex: 1 },
+  modalTrenner:   { height: 1, marginBottom: 16 },
+  modalText:      { fontFamily: FONTS.sans, fontSize: 15, color: COLORS.textSecondary, lineHeight: 24 },
 });
