@@ -18,7 +18,8 @@ import {
 import HomeScreen from './src/screens/HomeScreen';
 import KategorienScreen from './src/screens/KategorienScreen';
 import EinstellungenScreen from './src/screens/EinstellungenScreen';
-import { setupNotifications, requestNotificationPermission } from './src/services/notifications';
+import { setupNotifications, requestNotificationPermission, planeTaglicheBenachrichtigung } from './src/services/notifications';
+import { getBenachrichtigungszeit } from './src/services/storage';
 import { COLORS } from './src/theme';
 
 const Tab = createBottomTabNavigator();
@@ -34,7 +35,16 @@ export default function App() {
   });
 
   useEffect(() => {
-    setupNotifications().then(() => requestNotificationPermission());
+    async function init() {
+      await setupNotifications();
+      const granted = await requestNotificationPermission();
+      if (granted) {
+        const zeit = await getBenachrichtigungszeit();
+        const [h, m] = zeit.split(':').map(Number);
+        await planeTaglicheBenachrichtigung(h, m);
+      }
+    }
+    init();
   }, []);
 
   if (!fontsLoaded) {

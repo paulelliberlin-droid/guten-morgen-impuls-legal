@@ -28,7 +28,17 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#E6C87A",
+          "sounds": [],
+          "androidMode": "default",
+          "androidCollapsedTitle": "Guten Morgen Impuls"
+        }
+      ]
     ],
     "extra": {
       "eas": {
