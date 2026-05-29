@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   bildPlaceholder:{ height: 180, borderRadius: RADIUS.lg, justifyContent: 'center', alignItems: 'center' },
   placeholderEmoji:{ fontSize: 64 },
 
-  textCard:       { marginBottom: 32, backgroundColor: '#1E1C30', borderRadius: RADIUS.lg, paddingHorizontal: 24, paddingTop: 8, paddingBottom: 20, borderWidth: 1, borderColor: 'rgba(200,169,110,0.15)' },
+  textCard:       { marginBottom: 32, backgroundColor: '#1E1C30', borderRadius: RADIUS.lg, paddingHorizontal: 24, paddingTop: 8, paddingBottom: 20, borderWidth: 1.5, borderColor: 'rgba(200,169,110,0.55)' },
   anführung:      { fontFamily: FONTS.serifBold, fontSize: 72, color: COLORS.gold, opacity: 0.3, lineHeight: 60, marginBottom: -8 },
   anführungEnd:   { textAlign: 'right', marginTop: -24, marginBottom: 0 },
   impulsText:     { fontFamily: FONTS.serifItalic, fontSize: 22, lineHeight: 36, color: COLORS.textPrimary, textAlign: 'center', paddingHorizontal: 8 },
