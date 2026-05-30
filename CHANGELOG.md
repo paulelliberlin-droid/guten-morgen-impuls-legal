@@ -1,5 +1,13 @@
 # Changelog — Guten Morgen Impuls
 
+## [1.2.4] — 2026-05-30
+### Bugfix
+- Countdown läuft jetzt korrekt weiter, auch wenn die App im Hintergrund
+  war oder geschlossen wurde. Berechnung erfolgt gegen die echte Uhrzeit
+  (Date.now) statt durch Herunterzählen; AppState-Listener synchronisiert
+  die Restzeit beim Zurückkehren in den Vordergrund.
+- Countdown startet jetzt sofort nach „Nächster Impuls"
+
 ## [1.1.2] — 2026-05-29
 ### Bugfix
 - Rate-Limit überlebt jetzt App-Neustart: Impuls wird angezeigt, aber

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import {
   View, Text, StyleSheet, Image, TouchableOpacity,
-  ActivityIndicator, Animated, ScrollView, StatusBar
+  ActivityIndicator, Animated, ScrollView, StatusBar, AppState
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { loadImpulse, getZufallsImpuls } from '../services/impulse';
@@ -19,19 +19,50 @@ export default function HomeScreen() {
   const [erledigt, setErledigt]     = useState(false);
   const [gesperrt, setGesperrt]     = useState(false);
   const [warteSeconds, setWarteSeconds] = useState(0);
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const fadeAnim   = useRef(new Animated.Value(0)).current;
+  const endTimeRef = useRef(0);   // absoluter Zeitpunkt (ms), wann die Sperre endet
 
-  // Countdown-Ticker: läuft jede Sekunde wenn gesperrt
+  // Sperre aktivieren anhand verbleibender Millisekunden
+  const setzeSperre = useCallback((ms) => {
+    if (ms <= 0) { setGesperrt(false); setWarteSeconds(0); return; }
+    endTimeRef.current = Date.now() + ms;          // an echte Uhrzeit koppeln
+    setWarteSeconds(Math.ceil(ms / 1000));
+    setGesperrt(true);
+  }, []);
+
+  // Countdown-Ticker: rechnet IMMER gegen die echte Uhrzeit (Date.now),
+  // nicht durch Herunterzählen — dadurch keine Drift bei Hintergrund/Reaktivierung.
   useEffect(() => {
-    if (!gesperrt || warteSeconds <= 0) return;
-    const timer = setTimeout(() => {
-      setWarteSeconds(s => {
-        if (s <= 1) { setGesperrt(false); return 0; }
-        return s - 1;
-      });
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [gesperrt, warteSeconds]);
+    if (!gesperrt) return;
+    const tick = () => {
+      const verbleibend = Math.ceil((endTimeRef.current - Date.now()) / 1000);
+      if (verbleibend <= 0) {
+        setGesperrt(false);
+        setWarteSeconds(0);
+      } else {
+        setWarteSeconds(verbleibend);
+      }
+    };
+    tick();                                  // sofort aktualisieren
+    const interval = setInterval(tick, 1000);
+    return () => clearInterval(interval);
+  }, [gesperrt]);
+
+  // AppState: beim Zurückkehren in den Vordergrund Restzeit neu aus Storage berechnen.
+  // So bleibt der Countdown korrekt, auch wenn die App im Hintergrund war.
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', async (state) => {
+      if (state !== 'active') return;
+      const darf = await darfNeuenImpulsLaden();
+      if (!darf) {
+        setzeSperre(await getVerbleibendeWartezeit());
+      } else {
+        setGesperrt(false);
+        setWarteSeconds(0);
+      }
+    });
+    return () => sub.remove();
+  }, [setzeSperre]);
 
   useEffect(() => { ladeTagesImpuls(true); }, []);
 
@@ -67,9 +98,7 @@ export default function HomeScreen() {
         // Prüfen ob Sperre aus vorheriger Session noch aktiv ist
         const darf = await darfNeuenImpulsLaden();
         if (!darf) {
-          const ms = await getVerbleibendeWartezeit();
-          setWarteSeconds(Math.ceil(ms / 1000));
-          setGesperrt(true);
+          setzeSperre(await getVerbleibendeWartezeit());
         }
       } catch {
         setImpuls(null);
@@ -83,9 +112,7 @@ export default function HomeScreen() {
     // ── "Nächster Impuls"-Button: Rate-Limit prüfen ───────────────────────────
     const darf = await darfNeuenImpulsLaden();
     if (!darf) {
-      const ms = await getVerbleibendeWartezeit();
-      setWarteSeconds(Math.ceil(ms / 1000));
-      setGesperrt(true);
+      setzeSperre(await getVerbleibendeWartezeit());
       return;
     }
 
@@ -102,6 +129,7 @@ export default function HomeScreen() {
       setErledigt(erledigteIds.includes(ausgewaehlter?.id));
       await setLetzterImpuls(ausgewaehlter);   // neuen Impuls speichern
       await setLetztenImpulsZeit();             // Timestamp für Rate-Limit setzen
+      setzeSperre(await getVerbleibendeWartezeit()); // Countdown sofort starten
     } catch {
       setImpuls(null);
     } finally {
