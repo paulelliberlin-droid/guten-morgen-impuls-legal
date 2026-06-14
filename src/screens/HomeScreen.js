@@ -10,6 +10,7 @@ import {
   addErledigterImpuls, darfNeuenImpulsLaden,
   setLetztenImpulsZeit, getVerbleibendeWartezeit,
   getZufallsprinzip, getLetzterImpuls, setLetzterImpuls,
+  getGezeigteImpulse, addGezeigterImpuls,
 } from '../services/storage';
 import { COLORS, FONTS, RADIUS, KATEGORIE_CONFIG } from '../theme';
 
@@ -89,10 +90,12 @@ export default function HomeScreen() {
           const kategorien = zufall ? [] : await getBevorzugteKategorien();
           const alle       = await loadImpulse(kategorien);
           if (!alle.length) { setImpuls(null); return; }
-          const ausgewaehlter = getZufallsImpuls(alle, erledigteIds);
+          const gezeigte      = await getGezeigteImpulse();
+          const ausgewaehlter = getZufallsImpuls(alle, gezeigte);
           setImpuls(ausgewaehlter);
           setErledigt(erledigteIds.includes(ausgewaehlter?.id));
           await setLetzterImpuls(ausgewaehlter);
+          if (ausgewaehlter) await addGezeigterImpuls(ausgewaehlter.id);
         }
 
         // Prüfen ob Sperre aus vorheriger Session noch aktiv ist
@@ -122,12 +125,14 @@ export default function HomeScreen() {
       const zufall       = await getZufallsprinzip();
       const kategorien   = zufall ? [] : await getBevorzugteKategorien();
       const erledigteIds = await getErledigteImpulse();
+      const gezeigte     = await getGezeigteImpulse();
       const alle         = await loadImpulse(kategorien);
       if (!alle.length) { setImpuls(null); return; }
-      const ausgewaehlter = getZufallsImpuls(alle, erledigteIds);
+      const ausgewaehlter = getZufallsImpuls(alle, gezeigte);
       setImpuls(ausgewaehlter);
       setErledigt(erledigteIds.includes(ausgewaehlter?.id));
       await setLetzterImpuls(ausgewaehlter);   // neuen Impuls speichern
+      if (ausgewaehlter) await addGezeigterImpuls(ausgewaehlter.id);
       await setLetztenImpulsZeit();             // Timestamp für Rate-Limit setzen
       setzeSperre(await getVerbleibendeWartezeit()); // Countdown sofort starten
     } catch {
@@ -234,8 +239,8 @@ export default function HomeScreen() {
               <Text style={styles.gesperrtText}>⏱  Nächster Impuls in {formatWartezeit(warteSeconds)}</Text>
             </View>
           ) : (
-            <TouchableOpacity style={styles.btnWeiter} onPress={() => ladeTagesImpuls(false)} activeOpacity={0.6}>
-              <Text style={styles.btnWeiterText}>Naechster Impuls  →</Text>
+            <TouchableOpacity style={styles.btnWeiter} onPress={() => ladeTagesImpuls(false)} activeOpacity={0.7}>
+              <Text style={styles.btnWeiterText}>Nächster Impuls  →</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -270,8 +275,8 @@ const styles = StyleSheet.create({
   btnErledigtText:{ fontFamily: FONTS.sansBold, fontSize: 15, color: COLORS.bg },
   erledigtBadge:  { paddingVertical: 15, borderRadius: RADIUS.md, alignItems: 'center', borderWidth: 1.5 },
   erledigtText:   { fontFamily: FONTS.sansBold, fontSize: 15 },
-  btnWeiter:      { paddingVertical: 14, alignItems: 'center' },
-  btnWeiterText:  { fontFamily: FONTS.sans, fontSize: 14, color: COLORS.textMuted },
+  btnWeiter:      { paddingVertical: 14, borderRadius: RADIUS.md, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(200,169,110,0.3)', backgroundColor: 'rgba(200,169,110,0.07)' },
+  btnWeiterText:  { fontFamily: FONTS.sansMedium, fontSize: 15, color: COLORS.textSecondary, letterSpacing: 0.3 },
   gesperrtBox:    { paddingVertical: 14, alignItems: 'center' },
   gesperrtText:   { fontFamily: FONTS.sans, fontSize: 14, color: COLORS.textMuted },
 

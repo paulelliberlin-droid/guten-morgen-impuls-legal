@@ -22,14 +22,14 @@ export async function loadImpulse(kategorien = []) {
 }
 
 /**
- * Waehlt einen zufaelligen Impuls aus der Liste aus,
- * der noch nicht als erledigt markiert wurde.
+ * Waehlt einen zufaelligen Impuls aus, der in dieser Runde noch nicht gezeigt wurde.
+ * Erst wenn alle Impulse mindestens einmal gezeigt wurden, beginnt eine neue Runde.
  */
-export function getZufallsImpuls(impulse, erledigteIds = []) {
-  const verfuegbar = impulse.filter(imp => !erledigteIds.includes(imp.id));
+export function getZufallsImpuls(impulse, gezeigte = []) {
+  const ungesehen = impulse.filter(imp => !gezeigte.includes(imp.id));
 
-  // Fallback: wenn alle erledigt, nehme alle
-  const pool = verfuegbar.length > 0 ? verfuegbar : impulse;
+  // Neue Runde: alle wurden schon gezeigt → alle wieder verfuegbar
+  const pool = ungesehen.length > 0 ? ungesehen : impulse;
 
   const index = Math.floor(Math.random() * pool.length);
   return pool[index] || null;

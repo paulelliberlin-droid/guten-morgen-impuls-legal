@@ -23,7 +23,7 @@ export const DATENSCHUTZ_ABSCHNITTE = [
     text:
       'Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) für die App ' +
       '„Guten Morgen Impuls" ist:\n\n' +
-      'Paul Ellinger\n' +
+      'Paul Elli\n' +
       'E-Mail: paul.djazzy@tuta.com\n\n' +
       'Ein gesetzlich vorgeschriebener Datenschutzbeauftragter ist nicht bestellt, da die ' +
       'Voraussetzungen des Art. 37 DSGVO nicht erfüllt sind (keine umfangreiche ' +

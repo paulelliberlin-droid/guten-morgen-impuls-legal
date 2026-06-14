@@ -1,5 +1,16 @@
 # Changelog — Guten Morgen Impuls
 
+## [1.2.6] — 2026-06-14
+### Verbesserungen
+- Impulse wiederholen sich erst, wenn alle mindestens einmal angezeigt wurden (Round-Robin)
+- Separate Tracking-Liste für angezeigte Impulse (unabhängig von "Heute umgesetzt")
+
+## [1.2.5] — 2026-05-31
+### Verbesserungen
+- "Nächster Impuls" Button: sichtbarer als Button gestaltet (goldener Rand, hellerer Text)
+- Tippfehler behoben: "Naechster" → "Nächster"
+- Seed-Skript v3: 1 neuer Huna-Impuls + 13 neue Charisma-Impulse (aus Charisma-Training)
+
 ## [1.2.4] — 2026-05-30
 ### Bugfix
 - Countdown läuft jetzt korrekt weiter, auch wenn die App im Hintergrund

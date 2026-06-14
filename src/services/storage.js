@@ -8,6 +8,7 @@ const KEYS = {
   LETZTER_IMPULS_ZEIT: 'letzter_impuls_zeit',
   LETZTER_IMPULS: 'letzter_impuls',         // {id, text, kategorie, ...}
   ZUFALLSPRINZIP: 'zufallsprinzip',
+  GEZEIGTE_IMPULSE: 'gezeigte_impulse',     // IDs aller angezeigten Impulse (Round-Robin)
 };
 
 // --- Benachrichtigungszeit ---
@@ -70,6 +71,24 @@ export async function getErledigteStatistik() {
 
 export async function resetErledigteImpulse() {
   await AsyncStorage.removeItem(KEYS.ERLEDIGTE_IMPULSE);
+}
+
+// --- Gezeigte Impulse (Round-Robin: erst wiederholen wenn alle einmal gezeigt wurden) ---
+
+export async function getGezeigteImpulse() {
+  const value = await AsyncStorage.getItem(KEYS.GEZEIGTE_IMPULSE);
+  return value ? JSON.parse(value) : [];
+}
+
+export async function addGezeigterImpuls(impulsId) {
+  const current = await getGezeigteImpulse();
+  if (!current.includes(impulsId)) {
+    await AsyncStorage.setItem(KEYS.GEZEIGTE_IMPULSE, JSON.stringify([...current, impulsId]));
+  }
+}
+
+export async function resetGezeigteImpulse() {
+  await AsyncStorage.removeItem(KEYS.GEZEIGTE_IMPULSE);
 }
 
 // --- Letzter angezeigter Impuls ---
