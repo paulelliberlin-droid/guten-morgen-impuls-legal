@@ -8,7 +8,7 @@
  * Zuletzt aktualisiert: Mai 2026
  */
 
-export const DATENSCHUTZ_DATUM = 'Mai 2026';
+export const DATENSCHUTZ_DATUM = 'Juni 2026';
 
 export const DATENSCHUTZ_INTRO =
   'Der Schutz deiner persönlichen Daten ist uns wichtig. Diese Datenschutzerklärung ' +
@@ -145,7 +145,8 @@ export const DATENSCHUTZ_ABSCHNITTE = [
       '• Gewünschte Benachrichtigungszeit\n' +
       '• Liste der als „umgesetzt" markierten Impulse\n' +
       '• Verlauf umgesetzter Impulse mit Zeitstempel (für Statistik)\n' +
-      '• Zuletzt angezeigter Impuls\n\n' +
+      '• Zuletzt angezeigter Impuls\n' +
+      '• Liste bereits angezeigter Impulse (für gleichmäßige Auswahl ohne Wiederholung)\n\n' +
       'Diese Daten verlassen dein Gerät nicht, werden nicht an Server übertragen und ' +
       'nicht mit Dritten geteilt. Speicherdauer: bis zur Deinstallation der App. ' +
       'Löschung: jederzeit durch Deinstallation oder Löschen der App-Daten in den ' +
@@ -229,7 +230,7 @@ export const DATENSCHUTZ_ABSCHNITTE = [
       'informieren. Die jeweils aktuelle Version ist stets in der App unter ' +
       'Einstellungen → Datenschutzerklärung abrufbar sowie auf Anfrage per E-Mail ' +
       'erhältlich.\n\n' +
-      'Datum der letzten Änderung: ' + 'Mai 2026',
+      'Datum der letzten Änderung: ' + 'Juni 2026',
   },
 
 ];

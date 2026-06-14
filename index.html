@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guten Morgen Impuls – Datenschutz & Impressum</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1A1A2E;
+      color: #E0D8C8;
+      line-height: 1.7;
+      padding: 24px 16px 64px;
+    }
+    .container { max-width: 760px; margin: 0 auto; }
+    h1 {
+      font-size: 1.6rem;
+      color: #E6C87A;
+      margin-bottom: 4px;
+    }
+    .subtitle { font-size: 0.9rem; color: #8888aa; margin-bottom: 40px; }
+    nav { display: flex; gap: 16px; margin-bottom: 40px; flex-wrap: wrap; }
+    nav a {
+      color: #E6C87A;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(230,200,122,0.4);
+      padding-bottom: 2px;
+      font-size: 0.95rem;
+    }
+    nav a:hover { border-color: #E6C87A; }
+    section { margin-bottom: 56px; }
+    section h2 {
+      font-size: 1.25rem;
+      color: #E6C87A;
+      margin-bottom: 24px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(230,200,122,0.2);
+    }
+    .block { margin-bottom: 24px; }
+    .block h3 {
+      font-size: 1rem;
+      color: #c8b88a;
+      margin-bottom: 8px;
+    }
+    .block p {
+      font-size: 0.92rem;
+      color: #c0b8a8;
+      white-space: pre-wrap;
+    }
+    footer {
+      margin-top: 48px;
+      font-size: 0.8rem;
+      color: #555577;
+      text-align: center;
+    }
+    a { color: #aaaacc; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Guten Morgen Impuls</h1>
+  <p class="subtitle">Rechtliche Informationen zur Android-App</p>
+
+  <nav>
+    <a href="#datenschutz">Datenschutzerklärung</a>
+    <a href="#impressum">Impressum</a>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="datenschutz">
+    <h2>Datenschutzerklärung</h2>
+    <p style="margin-bottom:20px; font-size:0.92rem; color:#c0b8a8;">
+      Der Schutz deiner persönlichen Daten ist uns wichtig. Diese Datenschutzerklärung
+      informiert dich gemäß Art. 13 und 14 DSGVO darüber, welche Daten die App
+      „Guten Morgen Impuls" verarbeitet, auf welcher Rechtsgrundlage, wie lange sie
+      gespeichert werden und welche Rechte du hast.
+    </p>
+
+    <div class="block">
+      <h3>1. Verantwortlicher</h3>
+      <p>Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) für die App
+„Guten Morgen Impuls" ist:
+
+Paul Elli
+E-Mail: paul.djazzy@tuta.com
+
+Ein gesetzlich vorgeschriebener Datenschutzbeauftragter ist nicht bestellt, da die
+Voraussetzungen des Art. 37 DSGVO nicht erfüllt sind (keine umfangreiche
+Verarbeitung sensibler Daten, kein öffentlicher Träger).
+
+Bei Fragen, Auskunftsersuchen oder der Ausübung deiner Rechte wende dich jederzeit
+per E-Mail an uns.</p>
+    </div>
+
+    <div class="block">
+      <h3>2. Grundsätze der Datenverarbeitung</h3>
+      <p>Wir verarbeiten personenbezogene Daten nur, soweit dies für den Betrieb der App
+erforderlich ist (Datensparsamkeit, Art. 5 Abs. 1 lit. c DSGVO). Wir betreiben:
+
+• Kein Nutzertracking
+• Keine Werbung oder Werbe-IDs
+• Keine Analyse deines Nutzungsverhaltens
+• Keine Profilerstellung
+• Keine automatisierte Entscheidungsfindung im Sinne von Art. 22 DSGVO
+• Keine Weitergabe deiner Daten zu kommerziellen Zwecken</p>
+    </div>
+
+    <div class="block">
+      <h3>3. Übersicht der verarbeiteten Daten</h3>
+      <p>Die App verarbeitet folgende Datenkategorien:
+
+① Lokale Gerätedaten (AsyncStorage)
+Bevorzugte Kategorien, Benachrichtigungszeit, erledigte Impulse,
+zuletzt angezeigter Impuls, Statistik der umgesetzten Impulse,
+Liste bereits angezeigter Impulse (für gleichmäßige Auswahl ohne Wiederholung).
+Speicherort: ausschließlich auf deinem Gerät · Speicherdauer: bis zur Deinstallation der App
+
+② FCM-Benachrichtigungstoken
+Gerätebezogener Token für Push-Benachrichtigungen, erzeugt von Google Firebase.
+Speicherort: Google-Server · Speicherdauer: wird automatisch erneuert;
+nach Deinstallation oder Deaktivierung der Benachrichtigungen nicht mehr verwendet
+
+③ Impuls-Inhalte (Firestore)
+Texte und Kategorien der Impulse werden aus der Cloud-Datenbank abgerufen.
+Es werden dabei keine personenbezogenen Daten übertragen oder gespeichert.
+Speicherort: Google Firebase Firestore · Keine Speicherung personenbezogener Daten</p>
+    </div>
+
+    <div class="block">
+      <h3>4. Rechtsgrundlagen der Verarbeitung</h3>
+      <p>Jede Datenverarbeitung erfolgt auf einer der folgenden Rechtsgrundlagen:
+
+• Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung): Abruf der Impuls-Inhalte
+  aus Firebase Firestore, um die Kernfunktion der App bereitzustellen.
+
+• Art. 6 Abs. 1 lit. a DSGVO (Einwilligung): Verarbeitung des FCM-Tokens und
+  Versand von Push-Benachrichtigungen. Die Einwilligung erteilst du durch Aktivierung
+  der Benachrichtigungen im Betriebssystem-Dialog.
+
+• Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse): Lokale Speicherung deiner
+  App-Einstellungen auf deinem Gerät zur Bereitstellung eines personalisierten
+  Nutzungserlebnisses.</p>
+    </div>
+
+    <div class="block">
+      <h3>5. Push-Benachrichtigungen &amp; Widerrufsrecht</h3>
+      <p>Wenn du Push-Benachrichtigungen aktivierst, wird durch Google Firebase Cloud
+Messaging (FCM) ein gerätespezifischer Token erzeugt. Dieser Token identifiziert
+dein Gerät für den Versand der täglichen Impuls-Benachrichtigung.
+
+Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)
+
+Widerrufsrecht (Art. 7 Abs. 3 DSGVO): Du kannst deine Einwilligung jederzeit
+mit Wirkung für die Zukunft widerrufen, ohne dass dies die Rechtmäßigkeit der
+bisherigen Verarbeitung berührt. Den Widerruf kannst du jederzeit ausüben durch:
+
+• Deaktivierung der App-Benachrichtigungen in den Systemeinstellungen deines Geräts
+• Deinstallation der App
+
+Nach dem Widerruf werden keine weiteren Push-Benachrichtigungen gesendet.</p>
+    </div>
+
+    <div class="block">
+      <h3>6. Firebase und Google als Auftragsverarbeiter</h3>
+      <p>Diese App nutzt Firebase, einen Dienst der Google Ireland Limited, Gordon House,
+Barrow Street, Dublin 4, Irland (nachfolgend „Google").
+
+Google verarbeitet Daten als Auftragsverarbeiter gemäß Art. 28 DSGVO. Ein
+Auftragsverarbeitungsvertrag (Data Processing Agreement) liegt gemäß den
+Firebase-Nutzungsbedingungen vor.
+
+Genutzte Dienste:
+• Firebase Firestore: Bereitstellung der Impuls-Datenbank
+• Firebase Cloud Messaging (FCM): Versand von Push-Benachrichtigungen
+
+Drittlandübertragung: Bei der Nutzung von Firebase können Daten in die USA
+übertragen werden. Google LLC ist gemäß dem EU-US Data Privacy Framework zertifiziert
+(Angemessenheitsbeschluss der EU-Kommission vom 10. Juli 2023, Art. 45 DSGVO).
+Zusätzlich sind EU-Standardvertragsklauseln (Art. 46 Abs. 2 lit. c DSGVO) vereinbart.
+
+Datenschutzerklärung Google: <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a>
+Firebase-Datenschutz: <a href="https://firebase.google.com/support/privacy" target="_blank">https://firebase.google.com/support/privacy</a></p>
+    </div>
+
+    <div class="block">
+      <h3>7. Google Play Store</h3>
+      <p>Diese App wird über den Google Play Store vertrieben. Google LLC erhebt beim
+Download, der Installation und bei Aktualisierungen der App möglicherweise Daten
+(z. B. Installationsstatistiken, Geräteinformationen). Hierfür ist Google
+eigenverantwortlicher Verantwortlicher. Wir haben auf diese Datenerhebung
+keinen Einfluss.
+
+Datenschutzerklärung Google Play: <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
+    </div>
+
+    <div class="block">
+      <h3>8. App-Berechtigungen (Android)</h3>
+      <p>Die App fordert folgende Android-Berechtigungen an:
+
+• INTERNET: Erforderlich zum Abrufen der Impuls-Inhalte aus Firebase Firestore
+  und für Push-Benachrichtigungen über FCM.
+
+• POST_NOTIFICATIONS (Android 13+): Erforderlich für die Anzeige von
+  Push-Benachrichtigungen. Diese Berechtigung wird nur angefragt, wenn du
+  Benachrichtigungen aktivierst, und kann jederzeit in den Geräteeinstellungen
+  entzogen werden.
+
+Die App fordert keine weiteren Berechtigungen an (kein Zugriff auf Kamera,
+Mikrofon, Standort, Kontakte oder Speicher).</p>
+    </div>
+
+    <div class="block">
+      <h3>9. Lokale Datenspeicherung</h3>
+      <p>Deine persönlichen App-Einstellungen werden ausschließlich lokal auf deinem
+Gerät im App-eigenen Speicher (React Native AsyncStorage) abgelegt:
+
+• Bevorzugte Impuls-Kategorien
+• Gewünschte Benachrichtigungszeit
+• Liste der als „umgesetzt" markierten Impulse
+• Verlauf umgesetzter Impulse mit Zeitstempel (für Statistik)
+• Zuletzt angezeigter Impuls
+• Liste bereits angezeigter Impulse (für gleichmäßige Auswahl ohne Wiederholung)
+
+Diese Daten verlassen dein Gerät nicht, werden nicht an Server übertragen und
+nicht mit Dritten geteilt. Speicherdauer: bis zur Deinstallation der App.
+Löschung: jederzeit durch Deinstallation oder Löschen der App-Daten in den
+Geräteeinstellungen.</p>
+    </div>
+
+    <div class="block">
+      <h3>10. Kein Tracking, keine Analyse, keine Werbung</h3>
+      <p>Diese App enthält ausdrücklich:
+
+• Keine Analyse- oder Tracking-Tools (kein Google Analytics, kein Firebase Analytics,
+  kein Crashlytics, kein Sentry o. ä.)
+• Keine Werbebanner oder Werbenetzwerke
+• Keine Werbe-IDs (Advertising Identifier)
+• Keine Social-Media-Buttons oder -Plugins
+• Keine Cookies oder vergleichbare Tracking-Technologien
+
+Wir erhalten keinerlei Informationen darüber, wie du die App nutzt.</p>
+    </div>
+
+    <div class="block">
+      <h3>11. Deine Rechte als betroffene Person</h3>
+      <p>Du hast gegenüber uns folgende Rechte hinsichtlich deiner personenbezogenen Daten:
+
+• Auskunft (Art. 15 DSGVO): Welche Daten wir über dich verarbeiten
+• Berichtigung (Art. 16 DSGVO): Korrektur unrichtiger Daten
+• Löschung (Art. 17 DSGVO): Löschung deiner Daten
+• Einschränkung (Art. 18 DSGVO): Einschränkung der Verarbeitung
+• Datenübertragbarkeit (Art. 20 DSGVO): Daten in maschinenlesbarem Format erhalten
+• Widerruf (Art. 7 Abs. 3 DSGVO): Einwilligung jederzeit widerrufen
+
+⚠ Widerspruchsrecht (Art. 21 DSGVO): Du hast das Recht, jederzeit aus Gründen,
+die sich aus deiner besonderen Situation ergeben, Widerspruch gegen die Verarbeitung
+deiner personenbezogenen Daten einzulegen, die auf Grundlage von Art. 6 Abs. 1 lit. f
+DSGVO (berechtigtes Interesse) erfolgt. Wir verarbeiten die Daten dann nicht mehr,
+es sei denn, wir können zwingende schutzwürdige Gründe nachweisen.
+
+Zur Ausübung deiner Rechte: paul.djazzy@tuta.com</p>
+    </div>
+
+    <div class="block">
+      <h3>12. Beschwerderecht bei der Aufsichtsbehörde</h3>
+      <p>Du hast das Recht, dich bei einer Datenschutzaufsichtsbehörde über die
+Verarbeitung deiner personenbezogenen Daten durch uns zu beschweren (Art. 77 DSGVO).
+
+Zuständige Aufsichtsbehörde für Deutschland:
+
+Bundesbeauftragter für den Datenschutz und die Informationsfreiheit (BfDI)
+Husarenstraße 30, 53117 Bonn
+Tel.: +49 228 997799-0
+E-Mail: poststelle@bfdi.bund.de
+Web: <a href="https://www.bfdi.bund.de" target="_blank">https://www.bfdi.bund.de</a>
+
+Alternativ kannst du dich an die Datenschutzbehörde deines Bundeslandes wenden.</p>
+    </div>
+
+    <div class="block">
+      <h3>13. Datensicherheit</h3>
+      <p>Wir setzen technische und organisatorische Sicherheitsmaßnahmen gemäß Art. 32 DSGVO ein:
+
+• Alle Verbindungen zu Firebase-Diensten erfolgen verschlüsselt über TLS/HTTPS
+• Firebase-Zugangsdaten sind durch Firebase Security Rules geschützt
+• Lokale Daten sind durch das Android-Sandbox-Modell vor dem Zugriff
+  anderer Apps geschützt
+
+Trotz dieser Maßnahmen kann keine absolute Sicherheit der Datenübertragung
+über das Internet garantiert werden.</p>
+    </div>
+
+    <div class="block">
+      <h3>14. Kinder und Jugendliche</h3>
+      <p>Diese App richtet sich nicht an Kinder unter 16 Jahren. Wir erheben wissentlich
+keine personenbezogenen Daten von Kindern unter 16 Jahren. Solltest du Kenntnis
+davon erlangen, dass ein Kind unter 16 Jahren die App nutzt und dabei Daten
+verarbeitet werden, bitte informiere uns unter paul.djazzy@tuta.com, damit wir die
+notwendigen Maßnahmen ergreifen können.</p>
+    </div>
+
+    <div class="block">
+      <h3>15. Änderungen dieser Datenschutzerklärung</h3>
+      <p>Wir behalten uns vor, diese Datenschutzerklärung bei Bedarf anzupassen (z. B. bei
+neuen App-Funktionen, Änderungen der eingesetzten Dienste oder neuen gesetzlichen
+Anforderungen).
+
+Bei wesentlichen Änderungen werden wir dich durch einen Hinweis in der App
+informieren. Die jeweils aktuelle Version ist stets in der App unter
+Einstellungen → Datenschutzerklärung abrufbar sowie auf Anfrage per E-Mail
+erhältlich.
+
+Datum der letzten Änderung: Juni 2026</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="impressum">
+    <h2>Impressum</h2>
+
+    <div class="block">
+      <h3>Angaben gemäß § 5 TMG</h3>
+      <p>Paul Elli
+Hofjagdweg 4a
+12355 Berlin
+
+E-Mail: paul.djazzy@tuta.com</p>
+    </div>
+
+    <div class="block">
+      <h3>Verantwortlich für den Inhalt (§ 18 Abs. 2 MStV)</h3>
+      <p>Paul Elli
+Hofjagdweg 4a
+12355 Berlin</p>
+    </div>
+
+    <div class="block">
+      <h3>Haftung für Inhalte</h3>
+      <p>Die Inhalte dieser App wurden mit größter Sorgfalt erstellt. Für die Richtigkeit,
+Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.
+Als Anbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte nach den allgemeinen
+Gesetzen verantwortlich.</p>
+    </div>
+
+    <div class="block">
+      <h3>Urheberrecht</h3>
+      <p>Die durch den Betreiber erstellten Inhalte und Werke in dieser App unterliegen dem
+deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art
+der Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen
+Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
+    </div>
+
+    <div class="block">
+      <h3>Streitschlichtung</h3>
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
+<a href="https://ec.europa.eu/consumers/odr" target="_blank">https://ec.europa.eu/consumers/odr</a>
+
+Unsere E-Mail-Adresse findest du oben. Wir sind nicht bereit oder verpflichtet,
+an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Guten Morgen Impuls · Paul Elli · paul.djazzy@tuta.com · Stand: Juni 2026</p>
+  </footer>
+
+</div>
+</body>
+</html>
